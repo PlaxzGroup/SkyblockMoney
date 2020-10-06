@@ -1,3 +1,4 @@
+from re import findall
 from urllib import request, error
 
 money = 0
@@ -13,21 +14,10 @@ except error.HTTPError as e:
         print('Wrong connection, Please retry.')
 else:
     # print(response)
-    finding = ['purse', 'bank']
+    finding = [r'purse', r'bank']
     adding = [7, 6]
-    for j in range(len(finding)):
-        temp = response
-        while True:
-            try:
-                temp = temp[temp.index(finding[j]) + adding[j]:]
-            except ValueError:
-                break
-            else:
-                _money = 0
-                for i in range(len(temp)):
-                    if temp[i] != ',' and temp[i] != '.' and temp[i] != '}':
-                        _money = _money * 10 + int(temp[i])
-                    else:
-                        break
-                money += _money
+    for i in range(len(finding)):
+        temp = findall(finding[i] + '\":.*?(?=[,.}])', response)
+        for j in range(len(temp)):
+            money += int(temp[j][adding[i]:])
     print(name, ' has ', int(money), ' coins in Skyblock.')
