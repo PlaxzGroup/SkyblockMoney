@@ -9,7 +9,7 @@ try:
     response = request.urlopen(request.Request(url, headers=headers)).read().decode('utf-8')
 except error.HTTPError as e:
     if e.code == 500:
-        print('Wrong player ID or this player has no profile.')
+        print(e.read().decode('utf-8')[10:-2])
     else:
         print('Wrong connection, Please retry.')
 else:
