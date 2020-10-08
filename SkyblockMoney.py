@@ -18,6 +18,6 @@ else:
     adding = [7, 6]
     for i in range(len(finding)):
         temp = findall(finding[i] + '\":.*?(?=[,.}])', response)
-        for j in range(len(temp)):
-            money += int(temp[j][adding[i]:])
+        for j in temp:
+            money += int(j[adding[i]:])
     print(name, ' has ', int(money), ' coins in Skyblock.')
